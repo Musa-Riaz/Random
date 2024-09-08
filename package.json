@@ -1,0 +1,16 @@
+{
+  "name": "new-express-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node api/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "vercel": "^37.4.0"
+  }
+}
