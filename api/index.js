@@ -1,8 +1,45 @@
 const express = require("express");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const connectDB = require("../config/db");
+const authRoutes = require("../routes/authRoute");
+const categoryRoutes = require("../routes/categoryRoutes");
+const productRoutes = require("../routes/productRoutes");
+const cors = require("cors");
+const path = require("path");
+
+//configure env
+dotenv.config();
+
+//database config
+connectDB();
+
+//rest object
 const app = express();
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+//middlewares
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
+// app.use(express.static(path.join(__dirname, "./client/build")))
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+//routes
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/product", productRoutes);
 
-module.exports = app;
+//rest api
+// app.use("*", function(req, res){
+//     res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// })
+
+app.use("/", (req, res) => {
+  res.send("App is working");
+});
+
+const PORT = process.env.PORT || 8080;
+
+//run listen
+app.listen(process.env.PORT, () => {
+  console.log(`Server runnnig on ${process.env.DEV_MODE} mode on port ${PORT}`);
+});
